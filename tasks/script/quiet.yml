@@ -10,7 +10,7 @@
   when: jenkins_crumb_enabled == 'true'
 
 - name: Jenkins | Parse crumb
-  set_fatc:
+  set_fact:
     crumb_value: crumb.content.split(':')[1]
   when: jenkins_crumb_enabled == 'true'
 
