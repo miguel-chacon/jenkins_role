@@ -87,6 +87,12 @@
     force_basic_auth: yes
     return_content: yes
   register: crumb_seed
+  when: jenkins_crumb_enabled == 'true'
+
+- name: Jenkins | Parse crumb value
+  set_fact:
+    crumb_seed_value: "{{ crumb_seed.content.split(':')[1] }}"
+  when: jenkins_crumb_enabled == 'true'
 
 - name: Jenkins | Build seed job
   uri:
@@ -97,4 +103,4 @@
     force_basic_auth: yes
     status_code: 201
     headers:
-      Jenkins-Crumb: "{{ crumb_seed.content.split(':')[1] }}"
+      Jenkins-Crumb: "{{ crumb_seed_value | default(omit) }}"
