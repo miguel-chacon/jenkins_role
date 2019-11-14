@@ -18,7 +18,7 @@ if ("${cred}" != "") {
         CredentialsScope.GLOBAL,
         "${id}",
         "${username}",
-        new BasicSSHUserPrivateKey.FileOnMasterPrivateKeySource("${cred}"),
+        new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource("${cred}"),
         "${password}",
         "${description}")
 } else if ("${text}" != "") {
