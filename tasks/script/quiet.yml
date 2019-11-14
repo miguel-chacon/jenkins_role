@@ -7,9 +7,9 @@
     force_basic_auth: yes
     return_content: yes
   register: crumb
-  when: jenkins_crumb_enabled
+  when: "{{ jenkins_crumb_enabled }}"
 
-- name: Jenkins | Running {{ item }}
+- name: Jenkins | Running "{{ item }}"
   uri:
     url: "{{ jenkins_url }}/{{ item }}"
     method: POST
