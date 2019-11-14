@@ -7,6 +7,7 @@
     force_basic_auth: yes
     return_content: yes
   register: crumb
+  when: jenkins_crumb_enabled
 
 - name: Jenkins | Running {{ item }}
   uri:
@@ -17,5 +18,5 @@
     force_basic_auth: yes
     status_code: 302
     headers:
-      Jenkins-Crumb: "{{ crumb.content.split(':')[1] }}"
+      Jenkins-Crumb: "{{ crumb.content.split(':')[1] | default(omit) }}"
   when: item in ['quietDown', 'cancelQuietDown']
