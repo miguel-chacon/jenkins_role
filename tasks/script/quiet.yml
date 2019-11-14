@@ -7,7 +7,7 @@
     force_basic_auth: yes
     return_content: yes
   register: crumb
-  when: "{{ jenkins_crumb_enabled }}"
+  when: jenkins_crumb_enabled == 'true'
 
 - name: Jenkins | Running "{{ item }}"
   uri:
