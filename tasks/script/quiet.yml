@@ -9,6 +9,11 @@
   register: crumb
   when: jenkins_crumb_enabled == 'true'
 
+- name: Jenkins | Parse crumb
+  set_fatc:
+    crumb_value: crumb.content.split(':')[1]
+  when: jenkins_crumb_enabled == 'true'
+
 - name: Jenkins | Running "{{ item }}"
   uri:
     url: "{{ jenkins_url }}/{{ item }}"
@@ -18,5 +23,5 @@
     force_basic_auth: yes
     status_code: 302
     headers:
-      Jenkins-Crumb: "{{ crumb.content.split(':')[1] | default(omit) }}"
+      Jenkins-Crumb: "{{ crumb_value | default(omit) }}"
   when: item in ['quietDown', 'cancelQuietDown']
